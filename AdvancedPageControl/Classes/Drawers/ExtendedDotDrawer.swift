@@ -26,10 +26,10 @@ public class ExtendedDotDrawer: AdvancedPageControlDrawerParentWithIndicator, Ad
 
                 let progress = currentItem - floor(currentItem)
 
-                var dotColor = dotsColor
+                var dotColor = indicatorColor
 
                 if i == Int(currentItem + 2) {
-                    dotColor = (dotsColor * Double(1 - progress)) + (indicatorColor * Double(progress))
+                    //dotColor = dotsColor (dotsColor * Double(1 - progress)) + (indicatorColor * Double(progress))
 
                     let centeredYPosition = getCenteredYPosition(rect, dotSize: size)
                     let y = rect.origin.y + centeredYPosition
@@ -65,7 +65,7 @@ public class ExtendedDotDrawer: AdvancedPageControlDrawerParentWithIndicator, Ad
 
     fileprivate func drawCurrentItem(_ rect: CGRect) {
         let progress = currentItem - floor(currentItem)
-        let color = (dotsColor * Double(progress)) + (indicatorColor * Double(1 - progress))
+        let color = dotsColor//(dotsColor * Double(progress)) + (indicatorColor * Double(1 - progress))
         if currentItem >= 0 {
             let step: CGFloat = (space + width)
             let centeredYPosition = getCenteredYPosition(rect, dotSize: size)
