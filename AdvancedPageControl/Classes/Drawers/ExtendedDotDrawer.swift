@@ -21,11 +21,19 @@ public class ExtendedDotDrawer: AdvancedPageControlDrawerParentWithIndicator, Ad
                 var newY: CGFloat = 0
                 var newHeight: CGFloat = 0
                 var newWidth: CGFloat = 0
-            
-                let dotColor = indicatorColor
+                let progress = round(currentItem - floor(currentItem))
+                let colorP = currentItem - floor(currentItem)
+                var dotColor = indicatorColor
                 let step = width + space
                 
                 if i == Int(currentItem + 2) {
+                    if progress == 0 {
+                        dotColor = indicatorColor
+                    }
+                    else {
+                        dotColor = (dotsColor * Double(1 - colorP)) + (indicatorColor * colorP)
+                    }
+                    
                     let centeredYPosition = getCenteredYPosition(rect, dotSize: size)
                     let y = rect.origin.y + centeredYPosition
                     let currPosProgress = currentItem - floor(currentItem)
@@ -50,7 +58,8 @@ public class ExtendedDotDrawer: AdvancedPageControlDrawerParentWithIndicator, Ad
                     newX = rect.origin.x + x
                     newY = y
                 }
-
+                
+//                if pro
                 drawItem(CGRect(x: newX, y: newY, width: newWidth, height: newHeight), raduis: radius,
                          color: dotColor,
                          borderWidth: borderWidth, borderColor: borderColor)
@@ -59,8 +68,16 @@ public class ExtendedDotDrawer: AdvancedPageControlDrawerParentWithIndicator, Ad
     }
 
     fileprivate func drawCurrentItem(_ rect: CGRect) {
-        let color = dotsColor
+        let progress = round(currentItem - floor(currentItem))
+        let colorP = currentItem - floor(currentItem)
+        var color = dotsColor
         if currentItem >= 0 {
+            if progress == 0 {
+                color = dotsColor
+            }
+            else {
+                color = (dotsColor * Double(colorP)) + (indicatorColor * Double(1 - colorP))
+            }
             let step: CGFloat = width + space
             let centeredYPosition = getCenteredYPosition(rect, dotSize: size)
             let y = rect.origin.y + centeredYPosition
