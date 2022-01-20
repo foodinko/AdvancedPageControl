@@ -23,22 +23,33 @@ public class ExtendedDotDrawer: AdvancedPageControlDrawerParentWithIndicator, Ad
                 var newWidth: CGFloat = 0
             
                 let dotColor = indicatorColor
+                let step = width + space
                 
-                let centeredYPosition = getCenteredYPosition(rect, dotSize: size)
-                let y = rect.origin.y + centeredYPosition
-                var x = getCenteredXPosition(rect, itemPos: CGFloat(i), dotSize: width, space: space, numberOfPages: numberOfPages + 1)
-                
-                if i != Int(currentItem + 2) {
-                    x -= 2
-                }
-                else {
-                    x -= width / 2
-                }
+                if i == Int(currentItem + 2) {
+                    let centeredYPosition = getCenteredYPosition(rect, dotSize: size)
+                    let y = rect.origin.y + centeredYPosition
+                    let currPosProgress = currentItem - floor(currentItem)
+                    let curPos = floor(currentItem + 2) - currPosProgress
+                    let x = getCenteredXPosition(rect, itemPos: curPos, dotSize: width, space: space, numberOfPages: numberOfPages + 1)
+                    let halfMovementRatio = 1 - currPosProgress
+                    // reverse the scale value
+                    let scale = step - (halfMovementRatio * step)
 
-                newHeight = size
-                newWidth = width
-                newX = rect.origin.x + x
-                newY = y
+                    newHeight = size
+                    newWidth = width + scale
+                    newX = rect.origin.x + x
+                    newY = y
+
+                } else {
+                    let centeredYPosition = getCenteredYPosition(rect, dotSize: size)
+                    let y = rect.origin.y + centeredYPosition
+                    let x = getCenteredXPosition(rect, itemPos: CGFloat(i), dotSize: width, space: space, numberOfPages: numberOfPages + 1)
+
+                    newHeight = size
+                    newWidth = width
+                    newX = rect.origin.x + x
+                    newY = y
+                }
 
                 drawItem(CGRect(x: newX, y: newY, width: newWidth, height: newHeight), raduis: radius,
                          color: dotColor,
@@ -50,7 +61,7 @@ public class ExtendedDotDrawer: AdvancedPageControlDrawerParentWithIndicator, Ad
     fileprivate func drawCurrentItem(_ rect: CGRect) {
         let color = dotsColor
         if currentItem >= 0 {
-            let step: CGFloat = width
+            let step: CGFloat = width + space
             let centeredYPosition = getCenteredYPosition(rect, dotSize: size)
             let y = rect.origin.y + centeredYPosition
             let currPosProgress = currentItem - floor(currentItem)
@@ -62,12 +73,12 @@ public class ExtendedDotDrawer: AdvancedPageControlDrawerParentWithIndicator, Ad
                                          space: space,
                                          numberOfPages: numberOfPages + 1)
             
-            let halfMovementRatio = 2 - currPosProgress
+            let halfMovementRatio = 1 - currPosProgress
             let desiredWidth = width + (halfMovementRatio * step)
             let desiredX = rect.origin.x + x
             let rect = CGRect(x: desiredX,
                               y: y,
-                              width: width * 2,
+                              width: desiredWidth,
                               height: size)
             
             drawItem(rect,
