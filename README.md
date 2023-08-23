@@ -1,4 +1,4 @@
-# AdvancedPageControl
+# AdvancedPageControl : Using in CustomPageControl at FDKO
 
 [![Version](https://img.shields.io/cocoapods/v/AdvancedPageControl.svg?style=flat)](https://cocoapods.org/pods/AdvancedPageControl)
 [![License](https://img.shields.io/cocoapods/l/AdvancedPageControl.svg?style=flat)](https://cocoapods.org/pods/AdvancedPageControl)
